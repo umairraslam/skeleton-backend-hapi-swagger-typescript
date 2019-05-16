@@ -1,0 +1,42 @@
+{
+  "name": "type-script-hapi-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp build",
+    "start": "node build/src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc",
+    "tsc-watch": "tsc -w",
+    "watch": "nodemon --watch build/src build/src/index.js",
+    "dev": "nodemon --exec \"ts-node src/index.ts\""
+  },
+  "author": "umair.aslam",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.1.0",
+    "hapi": "^18.1.0",
+    "hapi-swagger": "^9.4.2",
+    "inert": "^5.1.3",
+    "joi": "^14.3.1",
+    "nodemon": "^1.19.0",
+    "vision": "^5.4.4"
+  },
+  "devDependencies": {
+    "@types/config": "0.0.34",
+    "@types/hapi": "^18.0.2",
+    "@types/joi": "^14.3.3",
+    "@types/node": "^12.0.2",
+    "gulp": "^4.0.2",
+    "gulp-env": "^0.4.0",
+    "gulp-mocha": "^6.0.0",
+    "gulp-rimraf": "^0.2.2",
+    "gulp-shell": "^0.7.0",
+    "gulp-tslint": "^8.1.4",
+    "ts-node": "^8.1.0",
+    "tsc-watch": "^2.2.0",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  }
+}
