@@ -16,8 +16,8 @@ const register = async (server: Hapi.Server) : Promise<void> => {
           },
           tags: [
             {
-              name: "testFeature",
-              description: "Api interface for TestFeature."
+              name: "user",
+              description: "Api interface for User."
             }
           ],
           swaggerUI: true,

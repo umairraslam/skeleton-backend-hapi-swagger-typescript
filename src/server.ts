@@ -2,8 +2,9 @@ import * as Hapi from "hapi";
 import ServerConfigurations from '../src/interfaces/server';
 import API from "./api"; 
 import Plugins from "./plugins";
+import { Database } from "./database";
 
-export default async (configs: ServerConfigurations) : Promise<Hapi.Server> => {
+export default async (configs: ServerConfigurations, database: Database) : Promise<Hapi.Server> => {
     try {
         const server = new Hapi.Server({
             debug: { request: ['error'] },
@@ -20,7 +21,8 @@ export default async (configs: ServerConfigurations) : Promise<Hapi.Server> => {
         }
 
         await Plugins(server, configs);
-        API(server, configs);
+        API(server, configs, database);
+        await database.sequelize.sync();
         return server;
     } catch (err) {
         console.log(err);

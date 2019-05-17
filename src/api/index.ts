@@ -1,9 +1,10 @@
 import * as Hapi from "hapi";
 import ServerConfigurations from '../interfaces/server';
-import Test from "./TestFeature";
+import User from "./User";
+import { Database } from "../database";
 
-export default (server: Hapi.Server, configs: ServerConfigurations) : void => {
+export default (server: Hapi.Server, configs: ServerConfigurations,  database: Database) : void => {
     console.log("Registering Routes");
-    Test(server, configs);
+    User(server, configs, database);
     console.log("Routes registered sucessfully.");
 }
