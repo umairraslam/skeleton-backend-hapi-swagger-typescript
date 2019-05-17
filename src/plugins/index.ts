@@ -8,7 +8,7 @@ export default async (server: Hapi.Server, configs: ServerConfigurations) : Prom
     const pluginOptions = { serverConfigs: configs };
     let pluginPromises: Promise<any>[] = [];
     plugins.forEach((pluginName: string) => {
-        var plugin: Plugin = require("../plugins/" + pluginName + ".ts").default();
+        var plugin: Plugin = require("./" + pluginName).default();
         console.log(
             `Registering Plugin ${plugin.info().name} v${plugin.info().version}`
         );
