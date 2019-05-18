@@ -11,7 +11,6 @@ export interface UserAttributes {
     createdAt?: Date;
     updatedAt?: Date;
 };
-
 export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
 
 }

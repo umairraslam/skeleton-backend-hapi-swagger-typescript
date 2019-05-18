@@ -5,18 +5,28 @@ import { UserFactory, UserAttributes, UserInstance } from '../api/User/model';
 export interface Database {
   sequelize: Sequelize.Sequelize;
   Sequelize: Sequelize.SequelizeStatic;
+  models: DatabaseModels
+}
+export interface DatabaseModels {
   userModel: Sequelize.Model<UserInstance, UserAttributes>;
 }
 
+export interface DatabaseAttributes extends UserAttributes {
+
+}
 
 export const init = (sequelizeConfig: DatabaseConfigurations): Database => {
   const { database, username, password, params } = sequelizeConfig;
   const sequelize = new Sequelize.Sequelize(database, username, password ? password: '', params);
 
+  const models: DatabaseModels = {
+    userModel: UserFactory(sequelize, Sequelize)
+  }
+
   const db: Database = {
     sequelize,
     Sequelize,
-    userModel: UserFactory(sequelize, Sequelize)
+    models
   };
 
 //   Object.keys(db).forEach(modelName => {
