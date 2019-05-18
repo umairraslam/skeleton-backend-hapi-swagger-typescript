@@ -15,6 +15,7 @@
   "author": "umair.aslam",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "config": "^3.1.0",
     "hapi": "^18.1.0",
     "hapi-swagger": "^9.4.2",
@@ -26,6 +27,7 @@
     "vision": "^5.4.4"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/bluebird": "^3.5.26",
     "@types/config": "0.0.34",
     "@types/continuation-local-storage": "^3.2.1",

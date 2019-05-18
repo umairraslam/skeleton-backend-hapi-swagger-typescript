@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize/index';
 import { SequelizeAttributes } from '../../database/attributes';
+import * as Bcrypt from "bcryptjs";
 
 export interface UserAttributes {
     id?: number;
@@ -14,6 +15,15 @@ export interface UserAttributes {
 export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
 
 }
+
+const hashPassword = (password: string): string | null => {
+    if (!password) {
+      return null;
+    }
+  
+    return Bcrypt.hashSync(password, Bcrypt.genSaltSync(8));
+  }
+  
 
 export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<UserInstance, UserAttributes> => {
     const attributes: SequelizeAttributes<UserAttributes> = {
@@ -36,14 +46,25 @@ export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize
 
     const User = sequelize.define<UserInstance, UserAttributes>('User', attributes);
 
-    // User.associate = models => {
-    //   User.hasMany(models.Comment, { foreignKey: 'AuthorId', as: 'comments' });
-    //   User.hasMany(models.Post, { foreignKey: 'AuthorId', as: 'posts' });
-    //   User.belongsToMany(models.Comment, {
-    //     through: 'PostUpvotes',
-    //     as: 'upvotedComments'
-    //   });
-    // };
+    User.beforeCreate((model, options) => {
+        console.log(model.password);
+        let user = model;
+
+        if (!user.changed("password")) {
+          return;
+        }
+        let hash = hashPassword(user["password"]);
+      
+        user["password"] = hash ? hash : '';
+            
+    });
+
+    User.beforeBulkUpdate((model:any, options) => {
+        if(!model.attributes.password){
+            return;
+        }
+        model.attributes.password = hashPassword(model.attributes.password);
+    });
 
     return User;
 };
