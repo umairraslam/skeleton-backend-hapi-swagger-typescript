@@ -3,7 +3,10 @@ import DatabaseConfigurations from "../interfaces/database";
 import { User, UserModel } from "../api/Users/model";
 
 export interface Database {
-    userModel: mongoose.Model<User>;
+    models: DatabaseModels
+}
+export interface DatabaseModels {
+  userModel: mongoose.Model<User>;
 }
 
 export const init = (config: DatabaseConfigurations): Database => {
@@ -20,7 +23,11 @@ export const init = (config: DatabaseConfigurations): Database => {
         console.log(`Connected to database: ${config.connectionString}`);
     });
 
-    return {
+    const models : DatabaseModels = {
         userModel: UserModel
+    };
+
+    return {
+        models: models
     };
 }
