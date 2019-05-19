@@ -2,26 +2,23 @@ import * as Hapi from "hapi";
 import * as Joi from "joi";
 import ServerConfigurations from "../../interfaces/server";
 import Controller from "./controller";
-import DatabaseService from "../../database/service";
+import CommentService from "./service";
 
-export default (server: Hapi.Server, configs: ServerConfigurations, databaseService: DatabaseService) => {
+export default (server: Hapi.Server, configs: ServerConfigurations, databaseService: CommentService) => {
     const controller = new Controller(configs, databaseService);
     server.bind(controller);
     server.route([
         {
             method: "POST",
-            path: "/user",
+            path: "/comment",
             options: {
                 handler: controller.create,
                 tags: ["api"],
-                description: "Creates a User",
+                description: "Creates a Comment",
                 validate: {
                     payload: {
-                        firstName: Joi.string().required(),
-                        lastName: Joi.string().required(),
-                        username: Joi.string().required(),
-                        email: Joi.string().required(),
-                        password: Joi.string().required()
+                        text: Joi.string().required(),
+                        author: Joi.string().required()
                     }
                 },
                 plugins: {
@@ -43,11 +40,11 @@ export default (server: Hapi.Server, configs: ServerConfigurations, databaseServ
         },
         {
             method: "GET",
-            path: "/user",
+            path: "/comment",
             options: {
                 handler: controller.getAll,
                 tags: ["api"],
-                description: "Retrieve all users",
+                description: "Retrieve all Comments",
                 validate: {
                 },
                 plugins: {
@@ -69,11 +66,11 @@ export default (server: Hapi.Server, configs: ServerConfigurations, databaseServ
         },
         {
             method: "GET",
-            path: "/user/{id}",
+            path: "/comment/{id}",
             options: {
                 handler: controller.getById,
                 tags: ["api"],
-                description: "Retrieve users by id",
+                description: "Retrieve Comments by id",
                 validate: {
                     params: {
                         id: Joi.string()
@@ -98,21 +95,17 @@ export default (server: Hapi.Server, configs: ServerConfigurations, databaseServ
         },
         {
             method: "PUT",
-            path: "/user/{id}",
+            path: "/comment/{id}",
             options: {
                 handler: controller.update,
                 tags: ["api"],
-                description: "Update user",
+                description: "Update Comment",
                 validate: {
                     params: {
                         id: Joi.string()
                     },
                     payload: {
-                        firstName: Joi.string(),
-                        lastName: Joi.string(),
-                        username: Joi.string(),
-                        email: Joi.string(),
-                        password: Joi.string()
+                        text: Joi.string()
                     }
                 },
                 plugins: {
@@ -134,11 +127,40 @@ export default (server: Hapi.Server, configs: ServerConfigurations, databaseServ
         },
         {
             method: "DELETE",
-            path: "/user/{id}",
+            path: "/comment/{id}",
             options: {
                 handler: controller.delete,
                 tags: ["api"],
-                description: "Delete user",
+                description: "Delete Comment",
+                validate: {
+                    params: {
+                        id: Joi.string()
+                    }
+                },
+                plugins: {
+                    "hapi-swagger": {
+                        responses: {
+                            "200": {
+                                description: "The user has been created."
+                            },
+                            "404": {
+                                description: "Route not found."
+                            },
+                            "500": {
+                                description: "Unable to create User."
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            method: "GET",
+            path: "/comment/{id}/author",
+            options: {
+                handler: controller.getAuthor,
+                tags: ["api"],
+                description: "Retrieve author of Comment",
                 validate: {
                     params: {
                         id: Joi.string()

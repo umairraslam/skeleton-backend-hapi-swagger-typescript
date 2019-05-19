@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
 import DatabaseConfigurations from "../interfaces/database";
-import { User, UserModel } from "../api/Users/model";
+import { User, UserModel } from "../api/User/model";
+import { Comment, CommentModel } from "../api/Comment/model";
+import DatabaseService from "./service";
 
 export interface Database {
     models: DatabaseModels
 }
 export interface DatabaseModels {
   userModel: mongoose.Model<User>;
+  commentModel: mongoose.Model<Comment>;
 }
 
-export const init = (config: DatabaseConfigurations): Database => {
+export const init = (config: DatabaseConfigurations): DatabaseService => {
     (<any>mongoose).Promise = Promise;
     mongoose.connect(process.env.MONGO_URL || config.connectionString);
 
@@ -24,10 +27,14 @@ export const init = (config: DatabaseConfigurations): Database => {
     });
 
     const models : DatabaseModels = {
-        userModel: UserModel
+        userModel: UserModel,
+        commentModel: CommentModel
     };
 
-    return {
+    const db = {
         models: models
     };
+
+    console.log("Database Service initialized")
+    return new DatabaseService(db);
 }

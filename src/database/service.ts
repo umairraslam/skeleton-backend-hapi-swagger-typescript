@@ -1,7 +1,7 @@
 import { Database, DatabaseModels } from "../database";
 
 export default class DatabaseService {
-    private database: Database;    
+    protected database: Database;    
 
     constructor(database: Database) {
         this.database = database;
@@ -12,7 +12,7 @@ export default class DatabaseService {
     }
 
     public getAll = async(model:keyof DatabaseModels) : Promise<Object> => {
-        return await this.database.models[model].find();
+        return await this.database.models[model].find({});
     }
 
     public getById = async(id:any, model:keyof DatabaseModels) : Promise<Object|null> => {
@@ -25,6 +25,10 @@ export default class DatabaseService {
 
     public delete = async(id:any, model:keyof DatabaseModels) : Promise<Object|null> => {
         return await this.database.models[model].deleteOne({_id: id});
+    }
+
+    public getDatabaseObject() : Database{
+        return this.database;
     }
 
 }
