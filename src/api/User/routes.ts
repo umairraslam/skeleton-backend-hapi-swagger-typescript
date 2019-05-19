@@ -2,9 +2,9 @@ import * as Hapi from "hapi";
 import * as Joi from "joi";
 import ServerConfigurations from "../../interfaces/server";
 import Controller from "./controller";
-import DatabaseService from "../../database/service";
+import UserService from "./service";
 
-export default (server: Hapi.Server, configs: ServerConfigurations, databaseService: DatabaseService) => {
+export default (server: Hapi.Server, configs: ServerConfigurations, databaseService: UserService) => {
     const controller = new Controller(configs, databaseService);
     server.bind(controller);
     server.route([

@@ -3,17 +3,17 @@
 import * as Hapi from "hapi";
 import ServerConfigurations from "../../interfaces/server";
 import { Request } from "../../interfaces/request";
-import DatabaseService from '../../database/service';
 import { DatabaseModels } from "../../database";
 import { UserInstance } from "../User/model";
 import { CommentAttributes, CommentInstance } from "./model";
+import CommentService from "./service";
 
 export default class Controller {
     private configs: ServerConfigurations;
-    private databaseService: DatabaseService;
+    private databaseService: CommentService;
     private modelName:keyof DatabaseModels = "commentModel";
 
-    constructor(configs: ServerConfigurations, databaseService: DatabaseService) {
+    constructor(configs: ServerConfigurations, databaseService: CommentService) {
         this.configs = configs;
         this.databaseService = databaseService;
     }

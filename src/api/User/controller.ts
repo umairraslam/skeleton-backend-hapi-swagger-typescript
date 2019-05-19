@@ -3,15 +3,15 @@
 import * as Hapi from "hapi";
 import ServerConfigurations from "../../interfaces/server";
 import { Request } from "../../interfaces/request";
-import DatabaseService from '../../database/service';
 import { DatabaseModels } from "../../database";
+import UserService from "./service";
 
 export default class Controller {
     private configs: ServerConfigurations;
-    private databaseService: DatabaseService;
+    private databaseService: UserService;
     private modelName:keyof DatabaseModels = "userModel";
 
-    constructor(configs: ServerConfigurations, databaseService: DatabaseService) {
+    constructor(configs: ServerConfigurations, databaseService: UserService) {
         this.configs = configs;
         this.databaseService = databaseService;
     }
