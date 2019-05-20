@@ -1,5 +1,4 @@
-import { Options, Dialect } from "sequelize";
-import { OperatorsAliases } from "sequelize";
+import { Options, Dialect, OperatorsAliases } from "sequelize";
 
 export default interface DatabaseConfigurations extends Options {
     database: string,

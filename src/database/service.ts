@@ -1,6 +1,4 @@
 import { Database, DatabaseModels, DatabaseAttributes } from "../database";
-import { UserInstance } from "../api/User/model";
-import { CommentInstance } from "../api/Comment/model";
 
 export default class DatabaseService {
     private database: Database;    
